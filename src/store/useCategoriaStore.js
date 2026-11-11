@@ -43,9 +43,11 @@ export const useCategoriaStore = create((set, get) => ({
             set({ categoriaSeleccionada: data });
         } catch (err) {
             handleApiError(err, 'Error al consultar la categoría.');
+            return null;
         } finally {
             setCargando(false);
         }
+        return get().categoriaSeleccionada;
     },
 
     addCategoria: async (nuevaCategoria) => {
@@ -91,8 +93,10 @@ export const useCategoriaStore = create((set, get) => ({
             await eliminarCategoriaService(id);
             const listaFiltrada = get().categorias.filter((c) => Number(c.id) !== Number(id));
             set({ categorias: listaFiltrada, categoriaSeleccionada: null });
+            return true;
         } catch (err) {
             handleApiError(err, 'Error al eliminar la categoria.');
+            return false;
         } finally {
             setCargando(false);
         }

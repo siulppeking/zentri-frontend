@@ -25,7 +25,7 @@ http.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 401 && window.location.pathname !== "/login") {
             localStorage.removeItem(import.meta.env.VITE_TOKEN_NAME);
             window.location.href = "/login";
         }
